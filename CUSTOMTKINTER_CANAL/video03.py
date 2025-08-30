@@ -12,19 +12,24 @@ class App( ctk.CTk ):
 
         self.baudrates = ["4800", "9600", "19200", "38400", "115200"]
 
+        self.comboboxPuertos = ctk.CTkComboBox(
+            self, 
+            values=self.baudrates, 
+            command= self.comboboxPuertos_callback
+        )
+
+        self.comboboxPuertos.set(self.baudrates[1])
+        self.comboboxPuertos.grid(row=0, column=0)
+
         self.lblPuertos = ctk.CTkLabel(
             self, 
             text="Puerto COM", 
             fg_color="transparent"
         )
         self.lblPuertos.grid(row=0, column=1)
-        self.comboboxPuertos = ctk.CTkComboBox(
-            self, 
-            values=self.baudrates, 
-            command= self.comboboxPuertos_callback
-        )
-        self.comboboxPuertos.set(self.baudrates[1])
-        self.comboboxPuertos.grid(row=0, column=0)
+        
+        
+        
 
 
         self.combobox = ctk.CTkComboBox(
