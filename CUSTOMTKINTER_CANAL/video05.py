@@ -5,7 +5,7 @@ class App(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("800x500")
+        self.geometry("1200x700")
         self.title("iSebas APP VIDEO 04")
 
         # Paleta Material Design
@@ -31,7 +31,7 @@ class App(ctk.CTk):
 
         self.lbl_puertos = ctk.CTkLabel(
             self.topbar,
-            text="Puertos:",
+            text="PUERTOS:",
             text_color=self.text_color
         )
         self.lbl_puertos.pack(side="left", padx=16)
