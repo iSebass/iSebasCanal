@@ -1,5 +1,8 @@
 import customtkinter as ctk
 
+import serial
+import serial.tools.list_ports as list_ports
+
 # ===== Paleta Material Light Modern =====
 BG_MAIN   = "#F9FAFB"   # fondo principal
 PANEL     = "#E5E7EB"   # frames/paneles
@@ -8,6 +11,8 @@ ACCENT    = "#2563EB"   # botón primario
 ACCENT_H  = "#1D4ED8"   # hover
 OK_COLOR  = "#059669"   # verde éxito
 ERR_COLOR = "#DC2626"   # rojo error
+
+SCAN_INTERVAL_MS = 1000  # cada 1 
 
 class App(ctk.CTk):
     def __init__(self):
@@ -19,8 +24,9 @@ class App(ctk.CTk):
         self.configure(fg_color=BG_MAIN)
 
         # Datos base
-        self.puertos   = ["COM1", "COM2", "COM3"]
-        self.baudrates = ["4800", "9600", "19200", "38400", "115200"]
+        self.baudrates   = ["4800", "9600", "19200", "38400", "115200"]
+        self.ports_cache = []                       # cache para detectar cambios
+        self.port_var    = ctk.StringVar(value="")  # puerto seleccionad
 
         # =================== TOP BAR ===================
         self.topbar = ctk.CTkFrame(
@@ -42,11 +48,12 @@ class App(ctk.CTk):
         # ComboBox Puerto (con callback)
         self.cbo_puertos = ctk.CTkComboBox(
             self.topbar, 
-            values=self.puertos, 
+            values=[], 
             width=140,
+            variable=self.port_var,
             command=self.on_port_changed
         )
-        self.cbo_puertos.set(self.puertos[0])
+        self.cbo_puertos.set("")
         self.cbo_puertos.pack(side="left", padx=(0,16), pady=10)
 
         # Label Baudrates
@@ -134,6 +141,41 @@ class App(ctk.CTk):
         )
         self.lbl_info_bottombar.pack(expand=True)  # centrado
 
+
+        # ---- Primer escaneo + refresco periódico ----
+        self._scan_ports_once()
+        self.after(SCAN_INTERVAL_MS, self._scan_ports_periodic)
+
+    # ====== Escaneo de puertos ======
+    def _get_ports(self):
+        """Retorna lista de nombres de dispositivo (COMx, /dev/ttyUSBx, etc.)."""
+        return [p.device for p in list_ports.comports()]
+
+    def _scan_ports_once(self):
+        ports = self._get_ports()
+        if ports != self.ports_cache:
+            self.ports_cache = ports[:]  # guarda nuevo snapshot
+            current = self.port_var.get()
+
+            # actualiza opciones del combobox
+            self.cbo_puertos.configure(values=ports)
+
+            if current in ports:
+                # conserva selección actual
+                self.port_var.set(current)
+            else:
+                # selecciona el primero disponible o vacío
+                self.port_var.set(ports[0] if ports else "")
+                if current and current not in ports:
+                    self.lbl_info_bottombar.configure(text=f"El puerto '{current}' ya no está disponible.")
+
+            # Si no hay puertos, avisa
+            if not ports:
+                self.lbl_info_bottombar.configure(text="No hay puertos disponibles.")
+
+    def _scan_ports_periodic(self):
+        self._scan_ports_once()
+        self.after(SCAN_INTERVAL_MS, self._scan_ports_periodic)
     
     # ======= Callbacks / Helpers =======
     def on_port_changed(self, value: str):
