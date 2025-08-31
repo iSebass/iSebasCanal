@@ -24,7 +24,7 @@ class App(ctk.CTk):
         self.configure(fg_color=BG_MAIN)
 
         # Datos base
-        self.baudrates   = ["4800", "9AA600", "19200", "38400", "115200"]
+        self.baudrates   = ["4800", "9600", "19200", "38400", "115200"]
         self.ports_cache = []                       # cache para detectar cambios
         self.port_var    = ctk.StringVar(value="")  # puerto seleccionad
         self.ser: serial.Serial | None = None

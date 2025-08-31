@@ -121,13 +121,6 @@ class App(ctk.CTk):
         )
         self.lbl_menu.pack(pady=(14,6), padx=50) 
 
-        # NUEVO: botón para mostrar el monitor serial
-        self.btn_monitor = ctk.CTkButton(
-            self.sidebar, text="🔍 Monitor Serial", width=170,
-            command=self._show_monitor
-        )
-        self.btn_monitor.pack(pady=(8,8))
-
         # Área central
         self.content = ctk.CTkFrame(self.body, fg_color=BG_MAIN)
         self.content.pack(side="left", fill="both", expand=True)
@@ -151,8 +144,6 @@ class App(ctk.CTk):
         )
         self.lbl_info_bottombar.pack(expand=True)  # centrado
 
-        # Construir la UI del Monitor (una sola vez)
-        self._build_monitor_ui()
 
         # ---- Primer escaneo + refresco periódico ----
         self._scan_ports_once()
@@ -160,123 +151,6 @@ class App(ctk.CTk):
 
         self.protocol("WM_DELETE_WINDOW", self._on_close) # <-- paso #3
         # ====== FIN DEL __INIT__ ======
-
-    # ====== Funcionaldiad SIDEBAR ======
-    def _build_monitor_ui(self):
-        """Crea los widgets del monitor (RX/TX, limpiar, enviar)."""
-        self.monitor_card = ctk.CTkFrame(self.content, fg_color=PANEL, corner_radius=16)
-
-        # Configuración de layout
-        self.monitor_card.grid_columnconfigure(0, weight=1, uniform="cols")
-        self.monitor_card.grid_columnconfigure(1, weight=1, uniform="cols")
-        self.monitor_card.grid_rowconfigure(1, weight=1)
-
-        # --- Columna izquierda: DATA IN ---
-        self.lbl_data_in = ctk.CTkLabel(
-            self.monitor_card, 
-            text="DATA IN", 
-            text_color=TXT, 
-            font=("", 14, "bold")
-        )
-        self.lbl_data_in.grid(row=0, column=0, sticky="w", padx=16, pady=(16,8))
-
-        self.rx_container = ctk.CTkFrame(
-            self.monitor_card, 
-            fg_color="#214F72", 
-            corner_radius=14
-        )
-        self.rx_container.grid(row=1, column=0, sticky="nsew", padx=12, pady=(0,12))
-
-        self.txt_rx = ctk.CTkTextbox(
-            self.rx_container, 
-            wrap="word", 
-            fg_color="#214F72", 
-            text_color="white"
-        )
-        self.txt_rx.pack(fill="both", expand=True, padx=12, pady=12)
-        self.txt_rx.configure(state="disabled")
-
-        # --- Columna derecha: DATA OUT ---
-        self.btn_clear = ctk.CTkButton(
-            self.monitor_card, 
-            text="🧹 Limpiar", 
-            width=120,
-            fg_color=ACCENT, 
-            hover_color=ACCENT_H,
-            command=self._clear_monitor
-        )
-        self.btn_clear.grid(row=0, column=1, sticky="e", padx=16, pady=(16,8))
-
-        self.lbl_data_out = ctk.CTkLabel(
-            self.monitor_card, 
-            text="DATA OUT", 
-            text_color=TXT, 
-            font=("", 14, "bold")
-        )
-        self.lbl_data_out.grid(row=0, column=1, sticky="w", padx=(16,0), pady=(16,8))
-
-        self.tx_box = ctk.CTkFrame(
-            self.monitor_card, 
-            fg_color=PANEL
-        )
-        self.tx_box.grid(row=1, column=1, sticky="n", padx=16, pady=(0,12))
-
-        self.entry_tx = ctk.CTkEntry(
-            self.tx_box, 
-            width=360, 
-            placeholder_text="Escribe aquí y presiona Enviar"
-        )
-        self.entry_tx.pack(pady=(8,10))
-
-        self.btn_send = ctk.CTkButton(
-            self.tx_box, 
-            text="Enviar", 
-            width=120, 
-            fg_color="#214F72",
-            command=self._send_data
-        )
-        self.btn_send.pack()
-
-    def _show_monitor(self):
-        """Muestra el monitor en el área central."""
-        # Oculta lo que haya en content
-        for w in self.content.winfo_children():
-            w.pack_forget()
-            w.grid_forget()
-        # Muestra el “card” del monitor
-        self.monitor_card.pack(fill="both", expand=True, padx=16, pady=16)
-
-    def _append_rx(self, text: str):
-        """Agrega texto recibido al Textbox RX (y hace scroll)."""
-        self.txt_rx.configure(state="normal")
-        self.txt_rx.insert("end", text)
-        self.txt_rx.see("end")
-        self.txt_rx.configure(state="disabled")
-
-    def _clear_monitor(self):
-        """Limpia el Textbox RX."""
-        self.txt_rx.configure(state="normal")
-        self.txt_rx.delete("1.0", "end")
-        self.txt_rx.configure(state="disabled")
-        self.lbl_info_bottombar.configure(text="Monitor limpiado.")
-
-    def _send_data(self):
-        """Envía el texto del entry al puerto (si conectado)."""
-        data = self.entry_tx.get()
-        if not data:
-            self.lbl_info_bottombar.configure(text="No hay datos para enviar.")
-            return
-        if not (self.ser and self.ser.is_open):
-            self.lbl_info_bottombar.configure(text="No hay conexión serial.")
-            return
-        try:
-            self.ser.write(data.encode("utf-8"))
-            self.lbl_info_bottombar.configure(text=f"TX: {data!r}")
-        except Exception as e:
-            self.lbl_info_bottombar.configure(text=f"Error al enviar: {e}")
-
-
-
 
 
     # ====== Metodos para RX DATA no bloqueante ======
@@ -299,7 +173,6 @@ class App(ctk.CTk):
                 if n:
                     data = self.ser.read(n)
                     text = data.decode("utf-8", errors="replace")
-                    self._append_rx(text)
                     print(text, end="")
         except Exception as e:
             print(f"[RX ERROR] {e}")
