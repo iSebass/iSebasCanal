@@ -33,9 +33,13 @@ class App(ctk.CTk):
         self.ser: serial.Serial | None = None       
         self._rx_after_id = None  
 
-        #=============== SE CREAN VARIABLES PARA OBtENER EL ESTADO DEL CHECKBOX CRLF Y TS                   
+        #=============== SE CREAN VARIABLES PARA OBtENER EL ESTADO DEL CHECKBOX CRLF Y TS
         self.cr_lf_var = ctk.BooleanVar(value=True)
-        self.ts_var   = ctk.BooleanVar(value=True)
+        self.ts_var    = ctk.BooleanVar(value=True)
+
+        #======== SE CREAN VARIABLES PARA OBTENER EL ESTADO DEL CHECKBOX CRLF Y TS   
+        self.cr_lf_var = ctk.BooleanVar(value=True)
+        self.ts_var    = ctk.BooleanVar(value=True)
 
         # =================== TOP BAR ===================  (SIN CAMBIOS)
         self.topbar = ctk.CTkFrame(self, height=56, fg_color=PANEL, corner_radius=0)   
@@ -104,7 +108,7 @@ class App(ctk.CTk):
             "IoT":          self._make_page("IoT"),
         }
 
-        self._build_monitor_serie(self.pages["MonitorSerie"])
+        self.build_monitor_serie( self.pages["MonitorSerie"] )
 
         for p in self.pages.values():                                             
             p.place(relx=0, rely=0, relwidth=1, relheight=1)
@@ -124,27 +128,41 @@ class App(ctk.CTk):
         # Página por defecto (resalta botón y trae al frente el frame)
         self.show_monitor()                                            
 
-        self.protocol("WM_DELETE_WINDOW", self._on_close)   
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
 
 
-    # SE CREA UN METODO BUILD_MONITOR_SERIE QUE RECIBA UN FRAME COMO  PARAMETRO
-    def _build_monitor_serie(self, frame):
-        # ---- Título
+    #====================================================================================
+    # METODOS Y LOGICAS 
+    # ===================================================================================
+    
+    def build_monitor_serie(self, frame):
+        #CREAMOS UN LABEL DE MONITOR SERIE
         ctk.CTkLabel(
-            frame, text="Monitor Serie", text_color=TXT, font=("", 18, "bold")
-        ).pack(padx=16, pady=(16, 8), anchor="w")
+            frame, 
+            text="Monitor Serie", 
+            text_color=TXT, 
+            font=("",16,"bold")
+        ).pack( padx=16, pady=(16,8), anchor="w")
 
-        # ---- Opciones (TS / CRLF)
+        # OPCIONES DE ( TS/ CRLF)
         opts = ctk.CTkFrame(frame, fg_color=BG_MAIN)
-        opts.pack(fill="x", padx=16, pady=(0, 8))
+        opts.pack(fill="x", padx=16, pady=(0,8))
+
         ctk.CTkCheckBox(
-            opts, text="Activar Timestamp", text_color=TXT, font=("", 13),
-            variable=self.ts_var
-        ).pack(side="left", padx=(0, 16))
-        ctk.CTkCheckBox(
-            opts, text="Activar CR/LF", text_color=TXT, font=("", 13),
-            variable=self.cr_lf_var
+            opts,
+            text="ACTIVAR TIME STAMP",
+            text_color=TXT,
+            font=("",14,"bold"),
+            variable=self.ts_var,
         ).pack(side="left")
+
+        ctk.CTkCheckBox(
+            opts,
+            text="ACTIVAR CR/LF AL ENVIAR",
+            text_color=TXT,
+            font=("",14,"bold"),
+            variable=self.cr_lf_var,
+        ).pack(side="left", padx=10)
 
         # ---- Consola RX/TX (integrada al tema)
         console_panel = ctk.CTkFrame(
@@ -165,7 +183,7 @@ class App(ctk.CTk):
         self.txt_monitor_serie.pack(fill="both", expand=True, padx=10, pady=10)
         self.txt_monitor_serie.configure(state="disabled")
 
-        # ---- Línea de envío
+      # ---- Línea de envío
         tx_row = ctk.CTkFrame(frame, fg_color=BG_MAIN)
         tx_row.pack(fill="x", padx=16, pady=(0, 16))
 
@@ -196,6 +214,7 @@ class App(ctk.CTk):
     
     def _send_from_entry(self):
         pass
+  
 
     # ---------------- Navegación (NUEVO) ----------------
     def _add_nav_button(self, name, cmd):                              
