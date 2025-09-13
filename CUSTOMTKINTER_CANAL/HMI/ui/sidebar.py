@@ -17,6 +17,7 @@ class SideBar(ctk.CTkFrame):
         self._add_nav_button("Actuadores", "actuadores")
         self._add_nav_button("IoT", "iot")
         self._add_nav_button("Configuración", "settings")
+        self._add_nav_button("iSebas", "isebas")
         ctk.CTkLabel(self, text="", fg_color=PANEL).pack(fill="both", expand=True)
         self._add_nav_button("Acerca de", "about")
 

@@ -7,9 +7,7 @@ from .pages.actuadores import ActuadoresPage
 from .pages.iot import IoTPage
 from .pages.settings import SettingsPage
 from .pages.about import AboutPage
-
-
-
+from .pages.iSebas_btn import iSebasClass
 
 class Router:
     def __init__(self, content_frame, serial_manager, status_cb):
@@ -34,6 +32,8 @@ class Router:
             page = SettingsPage(self.content)
         elif route == "about":
             page = AboutPage(self.content)
+        elif route == "isebas":
+            page = iSebasClass(self.content)
         else:
             page = DashboardPage(self.content)
         page.place(relx=0, rely=0, relwidth=1, relheight=1)

@@ -11,7 +11,7 @@ ERR_COLOR = "#DC2626"
 
 
 SCAN_INTERVAL_MS = 1000 # 1 s
-RX_POLL_MS       = 50 # ms
+RX_POLL_MS       = 50   # ms
 
 APP_TITLE = "iSebas HMI – Plantilla Modular"
 APP_SIZE = "1100x680"
