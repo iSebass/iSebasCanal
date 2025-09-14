@@ -8,6 +8,7 @@ from .pages.iot import IoTPage
 from .pages.settings import SettingsPage
 from .pages.about import AboutPage
 
+
 class Router:
     def __init__(self, content_frame, serial_manager, status_cb):
         self.content = content_frame

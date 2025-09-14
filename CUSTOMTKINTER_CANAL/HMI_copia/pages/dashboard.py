@@ -59,8 +59,6 @@ class DashboardPage(BasePage):
         self.hum_var  = ctk.StringVar(value="0.0")
         self.volt_var = ctk.StringVar(value="0.0")
 
-        #Agregar nuevos sensores
-        
         # ===== Contenedor de tarjetas =====
         self.sensor_grid = ctk.CTkFrame(self, fg_color=BG_MAIN, corner_radius=0)
         self.sensor_grid.pack(fill="both", expand=True, padx=16, pady=16)
@@ -81,14 +79,10 @@ class DashboardPage(BasePage):
             value_var=self.volt_var, unit="V"
         )
 
-        #CARTAS ADICIONALES
-        
         self.card_temp.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         self.card_hum.grid( row=0, column=1, sticky="nsew", padx=8, pady=8)
         self.card_volt.grid(row=0, column=2, sticky="nsew", padx=8, pady=8)
 
-        #AGREGAMOS AL GRID LAS NUEVAS CARTAS
-        
         #AGREGAR CONTENEDOR DE GRAFICOS
 
     # ===== Helpers =====
@@ -108,5 +102,3 @@ class DashboardPage(BasePage):
 
     def set_voltage_val(self, value):
         self.volt_var.set(self._fmt(value))
-
-    
