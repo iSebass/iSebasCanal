@@ -15,6 +15,14 @@ class Router:
         self.status_cb = status_cb
         self.pages = {}
 
+    def _ensure_dashboard(self):
+        if "dashboard" not in self.pages:
+            from .pages.dashboard import DashboardPage
+            dash = DashboardPage(self.content)
+            dash.place(relx=0, rely=0, relwidth=1, relheight=1)
+            self.pages["dashboard"] = dash
+        return self.pages["dashboard"]
+
     def get_or_create(self, route: str):
         if route in self.pages:
             return self.pages[route]
@@ -22,7 +30,14 @@ class Router:
         if route == "dashboard":
             page = DashboardPage(self.content)
         elif route == "monitor":
-            page = MonitorSeriePage(self.content, self.serial, self.status_cb)
+            from .pages.monitor import MonitorSeriePage
+            dash_ref = self._ensure_dashboard()
+            page = MonitorSeriePage(
+                self.content,
+                serial_manager=self.serial,
+                info_status_cb=self.status_cb,
+                dashboard_ref=dash_ref
+            )
         elif route == "actuadores":
             page = ActuadoresPage(self.content)
         elif route == "iot":

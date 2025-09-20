@@ -11,10 +11,13 @@ class MonitorSeriePage(BasePage):
     title = "Monitor Serie"
     subtitle = "Entradas (RX) y salidas (TX) con opciones TS/CRLF"
 
-    def __init__(self, master, serial_manager, info_status_cb, **kwargs):
+    def __init__(self, master, serial_manager, info_status_cb, dashboard_ref=None, **kwargs):
         super().__init__(master, **kwargs)
         self.serial = serial_manager
         self.info_status = info_status_cb
+
+        #tomamos la referencia de la gina de la dashboard desde la app
+        self.dashboard_ref = dashboard_ref
 
         # Opciones
         self.ts_var = ctk.BooleanVar(value=True)
@@ -73,10 +76,20 @@ class MonitorSeriePage(BasePage):
         text = self.serial.read_available_text()
         if not text:
             return
+
+        #GUARDAMOS EL TEXTO ORIGINAL ANTES DE ESTAMPARLO
+        original_text = text
+
         if stamped and self.ts_var.get():
             now = datetime.datetime.now().strftime("%H:%M:%S")
             text = "".join((f"[{now}] " + ln) if ln.strip() else ln for ln in text.splitlines(True))
+        
         self._append(self.txt_rx, text)
+
+        #Enviamos el texto tal y como lo armamos
+        self.dashboard_ref.set_sensors_value(original_text)
+
+        
 
     def send(self):
         data = self.entry.get().strip()

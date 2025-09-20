@@ -3,6 +3,9 @@ import customtkinter as ctk
 from .base import BasePage
 from ..theme import PANEL, BG_MAIN, TXT
 
+#SE IMPORTA PARA TRABAJAR JSON
+import json
+
 # ===== Paleta (fallbacks si no tienes tokens en theme.py) =====
 KPI_TEMP = "#7C3AED"  # morado
 KPI_HUM  = "#10B981"  # verde
@@ -108,5 +111,40 @@ class DashboardPage(BasePage):
 
     def set_voltage_val(self, value):
         self.volt_var.set(self._fmt(value))
+
+    def set_sensors_value(self, value):
+        """
+        Recibe un JSON en str o un dict ya parseado.
+        Lo transforma en dict y distribuye a los setters.
+        """
+        data = value
+
+        # Si llega como string => intenta parsear JSON
+        if isinstance(data, str):
+            try:
+                data = json.loads(data)
+            except Exception as e:
+                print("⚠️ No se pudo parsear JSON en set_sensors_value:", e, value)
+                return
+
+        if not isinstance(data, dict):
+            print("⚠️ set_sensors_value esperaba un dict, recibió:", type(data))
+            return
+
+        # Extraer campos con diferentes posibles claves
+        temp = data.get("temperature") or data.get("temp") or data.get("t")
+        hum  = data.get("humidity")    or data.get("humedad") or data.get("hum") or data.get("h")
+        volt = data.get("voltage")     or data.get("volt") or data.get("v") or data.get("vbatt")
+        
+
+        # Enviar a los setters si existe el valor
+        if temp is not None:
+            self.set_temperature_val(temp)
+        if hum is not None:
+            self.set_humidity_val(hum)
+        if volt is not None:
+            self.set_voltage_val(volt)
+
+        print("✅ Dashboard actualizada:", data)
 
    
