@@ -8,6 +8,7 @@ from .ui.topbar import TopBar
 from .ui.sidebar import SideBar
 from .router import Router
 
+import json
 
 class App(ctk.CTk):
     def __init__(self):
@@ -126,3 +127,26 @@ class App(ctk.CTk):
                 self.serial.close()
             finally:
                 self.destroy()
+
+    def send_json(self, obj: dict) -> bool:
+        """Serializa y envía JSON por serial. Refleja TX en Monitor si está presente."""
+        payload = json.dumps(obj, ensure_ascii=False)
+        ok = self.serial.write_text(payload)
+
+        # Reflejar en Monitor (si existe)
+        try:
+            mon = None
+            if hasattr(self, "router") and hasattr(self.router, "pages"):
+                mon = self.router.pages.get("monitor")
+            if mon and hasattr(mon, "append_tx"):
+                mon.append_tx(payload + ("" if payload.endswith("\n") else "\n"))
+        except Exception:
+            pass
+
+        # Status (opcional)
+        try:
+            self.info_status("✅ TX" if ok else "❌ Error TX")
+        except Exception:
+            pass
+
+        return ok

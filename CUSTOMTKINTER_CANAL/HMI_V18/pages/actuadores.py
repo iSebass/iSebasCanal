@@ -254,11 +254,22 @@ class ActuadoresPage(BasePage):
         self.servos = ServosCard(wrap, on_change=self._servo_changed)
         self.servos.pack(fill="x", pady=(8, 0))
 
+    # --- dentro de ActuadoresPage ---
+
+    def _send(self, obj: dict):
+        """Sube hasta App y usa su helper de envío."""
+        app = self.winfo_toplevel()
+        if hasattr(app, "send_json"):
+            app.send_json(obj)
+
     def _gpio_changed(self, pin_idx: int, value: int):
         print(f"[UI] GPIO D{pin_idx} => {value}")
+        self._send({"cmd": "digital", "ch": pin_idx, "value": int(value)})
 
     def _pwm_changed(self, ch: int, value: int):
         print(f"[UI] PWM{ch} => {value}")
+        self._send({"cmd": "pwm", "ch": ch, "value": int(value)})
 
     def _servo_changed(self, servo: int, angle: int):
         print(f"[UI] SERVO{servo} => {angle}°")
+        self._send({"cmd": "servo", "id": servo, "angle": int(angle)})

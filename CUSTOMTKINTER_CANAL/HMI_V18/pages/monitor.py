@@ -126,3 +126,6 @@ class MonitorSeriePage(BasePage):
         textbox.configure(state="normal")
         textbox.delete("1.0", "end")
         textbox.configure(state="disabled")
+
+    def append_tx(self, text: str):
+        self._append(self.txt_tx, text if text.endswith("\n") else text + "\n") 

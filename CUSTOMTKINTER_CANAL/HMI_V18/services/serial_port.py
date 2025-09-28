@@ -61,3 +61,18 @@ class SerialManager:
         except Exception:
             return ""
         return ""
+
+    def write_text(self, text: str) -> bool:
+        """Escribe texto UTF-8 al puerto. Retorna True si se envió."""
+        if not self.is_open():
+            return False
+        try:
+            if not text.endswith("\n"):
+                text += "\n"
+            self.ser.write(text.encode("utf-8"))
+            return True
+        except Exception:
+            return False
+
+    
+
