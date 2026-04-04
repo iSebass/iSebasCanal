@@ -1,0 +1,6 @@
+INFO:     Started server process [13500]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:58536 - "WebSocket /socket.io/?EIO=4&transport=websocket&sid=I56ELonTHenUBw1aAAAA" [accepted]
+INFO:     127.0.0.1:55780 - "WebSocket /socket.io/?EIO=4&transport=websocket&sid=cKQwC4F_68DuO_pcAAAC" [accepted]

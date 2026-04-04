@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gateway IoT Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+</head>
+<body>
+    <div class="background-blob blob-1"></div>
+    <div class="background-blob blob-2"></div>
+    
+    <main class="dashboard-container">
+        <header class="main-header">
+            <div class="logo">
+                <h1>Gateway<span>IoT</span></h1>
+                <p>Serial to MQTT Bridge</p>
+            </div>
+            <div class="status-indicator">
+                <div class="control-actions">
+                    <button id="start-real-btn" class="btn-control">Iniciar Real</button>
+                    <button id="start-sim-btn" class="btn-control secondary">Simular</button>
+                    <button id="stop-btn" class="btn-control danger" disabled>Detener</button>
+                </div>
+                <div id="serial-status" class="status-badge offline">
+                    <span class="dot"></span> Serial: <span class="label">Desconectado</span>
+                </div>
+                <div id="mqtt-status" class="status-badge offline">
+                    <span class="dot"></span> MQTT: <span class="label">Desconectado</span>
+                </div>
+            </div>
+
+        </header>
+
+        <section class="overview-grid">
+            <div class="card data-display">
+                <div class="card-header">
+                    <h2>Sensores en Tiempo Real</h2>
+                    <span class="last-update" id="last-update">Esperando datos...</span>
+                </div>
+                <div class="sensors-container" id="sensors-grid">
+                    <!-- Dynamic sensor cards will appear here -->
+                    <div class="empty-state">Iniciando sistema...</div>
+                </div>
+            </div>
+
+            <div class="card log-console">
+                <div class="card-header">
+                    <h2>Consola de Logs</h2>
+                    <button id="clear-logs" class="btn-icon">Limpiar</button>
+                </div>
+                <div class="log-output" id="log-output">
+                    <div class="log-entry system">[*] Sistema iniciado. Esperando conexión...</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="config-section">
+            <div class="card config-card">
+                <div class="card-header">
+                    <h2>Configuración</h2>
+                </div>
+                <form id="config-form" class="config-grid">
+                    <div class="form-group">
+                        <h3>Puerto Serial</h3>
+                        <label>Puerto COM</label>
+                        <input type="text" id="serial-port" name="serial.port" placeholder="COM3">
+                        <label>Baudios</label>
+                        <select id="serial-baud" name="serial.baud">
+                            <option value="4800">4800</option>
+                            <option value="9600">9600</option>
+                            <option value="19200">19200</option>
+                            <option value="38400">38400</option>
+                            <option value="57600">57600</option>
+                            <option value="115200">115200</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <h3>Broker MQTT</h3>
+                        <label>Host</label>
+                        <input type="text" id="mqtt-broker" name="mqtt.broker" placeholder="broker.emqx.io">
+                        <label>Usuario</label>
+                        <input type="text" id="mqtt-user" name="mqtt.username">
+                        <label>Contraseña</label>
+                        <input type="password" id="mqtt-pass" name="mqtt.password">
+                        <label>Tópico Base</label>
+                        <input type="text" id="mqtt-topic" name="mqtt.base_topic">
+                    </div>
+                    <div class="sensor-management">
+                        <h3>Mapeo de Sensores</h3>
+                        <p class="form-hint">Defina el nombre y unidad para cada dato recibido (en orden).</p>
+                        <div id="sensor-config-list" class="sensor-config-list">
+                            <!-- Dynamic inputs for sensors -->
+                        </div>
+                        <button type="button" id="add-sensor-row" class="btn-add-sensor">+ Añadir Sensor</button>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

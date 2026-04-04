@@ -1,0 +1,35 @@
+{
+    "serial": {
+        "port": "COM5",
+        "baud": 9600
+    },
+    "mqtt": {
+        "broker": "84.46.254.44",
+        "username": "pruebaCanal",
+        "password": "123456789",
+        "base_topic": "sensores/Canal",
+        "port": 1883
+    },
+    "sensors": [
+        {
+            "name": "TEMP_DHT22",
+            "unit": "C"
+        },
+        {
+            "name": "HUM_DHT22",
+            "unit": "%"
+        },
+        {
+            "name": "TEMP_LM35",
+            "unit": "C"
+        },
+        {
+            "name": "LDR",
+            "unit": "lux"
+        },
+        {
+            "name": "VOLT",
+            "unit": "V"
+        }
+    ]
+}

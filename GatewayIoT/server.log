@@ -1,0 +1,60 @@
+DEBUG: Lifecycle started - Initializing Bridge...
+DEBUG: Gateway ready.
+INFO:     127.0.0.1:53744 - "GET /socket.io/?EIO=4&transport=polling&t=PrKLBQC HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53744 - "POST /socket.io/?EIO=4&transport=polling&t=PrKLBVX&sid=I56ELonTHenUBw1aAAAA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53744 - "GET /socket.io/?EIO=4&transport=polling&t=PrKLBVY&sid=I56ELonTHenUBw1aAAAA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53744 - "GET /socket.io/?EIO=4&transport=polling&t=PrKLBVk&sid=I56ELonTHenUBw1aAAAA HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51184 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64053 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64053 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51179 - "GET /static/js/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51179 - "GET /socket.io/?EIO=4&transport=polling&t=PrKLG4z HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64053 - "GET /api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51179 - "GET /api/bridge/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64053 - "POST /socket.io/?EIO=4&transport=polling&t=PrKLG5E&sid=cKQwC4F_68DuO_pcAAAC HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51179 - "GET /socket.io/?EIO=4&transport=polling&t=PrKLG5G&sid=cKQwC4F_68DuO_pcAAAC HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51179 - "GET /socket.io/?EIO=4&transport=polling&t=PrKLG5U&sid=cKQwC4F_68DuO_pcAAAC HTTP/1.1" 200 OK
+DEBUG: MQTT Worker thread started.
+INFO:     127.0.0.1:65102 - "POST /api/bridge/start HTTP/1.1" 200 OK
+DEBUG: MQTT Connected successfully.
+DEBUG: Publishing to topic: sensores/Canal/tempdht22
+DEBUG: Publishing to topic: sensores/Canal/humdht22
+DEBUG: Publishing to topic: sensores/Canal/templm35
+DEBUG: Publishing to topic: sensores/Canal/luz
+DEBUG: Publishing to topic: sensores/Canal/voltage
+DEBUG: Publishing to topic: sensores/Canal/tempdht22
+DEBUG: Publishing to topic: sensores/Canal/humdht22
+DEBUG: Publishing to topic: sensores/Canal/templm35
+DEBUG: Publishing to topic: sensores/Canal/luz
+DEBUG: Publishing to topic: sensores/Canal/voltage
+DEBUG: Publishing to topic: sensores/Canal/tempdht22
+DEBUG: Publishing to topic: sensores/Canal/humdht22
+DEBUG: Publishing to topic: sensores/Canal/templm35
+DEBUG: Publishing to topic: sensores/Canal/luz
+DEBUG: Publishing to topic: sensores/Canal/voltage
+DEBUG: Publishing to topic: sensores/Canal/tempdht22
+DEBUG: Publishing to topic: sensores/Canal/humdht22
+DEBUG: Publishing to topic: sensores/Canal/templm35
+DEBUG: Publishing to topic: sensores/Canal/luz
+DEBUG: Publishing to topic: sensores/Canal/voltage
+DEBUG: Publishing to topic: sensores/Canal/tempdht22
+DEBUG: Publishing to topic: sensores/Canal/humdht22
+DEBUG: Publishing to topic: sensores/Canal/templm35
+DEBUG: Publishing to topic: sensores/Canal/luz
+DEBUG: Publishing to topic: sensores/Canal/voltage
+DEBUG: Publishing to topic: sensores/Canal/tempdht22
+DEBUG: Publishing to topic: sensores/Canal/humdht22
+DEBUG: Publishing to topic: sensores/Canal/templm35
+DEBUG: Publishing to topic: sensores/Canal/luz
+DEBUG: Publishing to topic: sensores/Canal/voltage
+DEBUG: Publishing to topic: sensores/Canal/tempdht22
+DEBUG: Publishing to topic: sensores/Canal/humdht22
+DEBUG: Publishing to topic: sensores/Canal/templm35
+DEBUG: Publishing to topic: sensores/Canal/luz
+DEBUG: Publishing to topic: sensores/Canal/voltage
+DEBUG: Publishing to topic: sensores/Canal/tempdht22
+DEBUG: Publishing to topic: sensores/Canal/humdht22
+DEBUG: Publishing to topic: sensores/Canal/templm35
+DEBUG: Publishing to topic: sensores/Canal/luz
+DEBUG: Publishing to topic: sensores/Canal/voltage
+INFO:     127.0.0.1:54533 - "POST /api/config HTTP/1.1" 200 OK
