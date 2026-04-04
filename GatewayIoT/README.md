@@ -2,7 +2,7 @@
 
 Un potente y estético **Gateway IoT** diseñado para comunicar hardware serial (Arduino, ESP32, Sensores) con un broker **MQTT** de forma sencilla, visual y profesional. Construido con una arquitectura moderna que separa el procesamiento de datos de la interfaz de usuario.
 
-![Dashboard Preview](https://via.placeholder.com/1280x720.png?text=Gateway+IoT+Dashboard+Preview)
+![Dashboard Preview](./static/assets/dashboard_preview.png)
 
 ## 🚀 Características Principales
 
@@ -68,9 +68,10 @@ Si realizas cambios en el código y quieres generar un nuevo ejecutable:
 3. El resultado estará en la carpeta `dist/`.
 
 ---
-## ⚡ Desarrollado con Antigravity AI
-Este proyecto ha sido desarrollado utilizando **Antigravity**, un potente asistente de codificación de IA, demostrando cómo se pueden construir herramientas de ingeniería robustas y estéticas en tiempo récord mediante **prompts efectivos**.
+## ⚡ Desarrollado por iSebas con Antigravity AI
+Este proyecto ha sido concebido y desarrollado por **iSebas** utilizando **Antigravity**, demostrando la integración de hardware y software con interfaces industriales modernas.
 
 ---
 ## 📜 Licencia
-Este proyecto está bajo la Licencia MIT. Siéntete libre de usarlo, modificarlo y compartirlo.
+© 2024 iSebas. Todos los derechos reservados.
+Queda prohibida la reproducción, distribución o modificación sin autorización del autor.
